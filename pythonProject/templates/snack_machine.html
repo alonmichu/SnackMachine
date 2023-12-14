@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/client.js') }}"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="numpad_wrapper">
+        <input class="numpad_input" type="number" readonly>
+        <div class="numpad_options" onclick="location.href='http://127.0.0.1:3000/admin';">&#9881;</div>
+        <div class = "numpad">
+            <div class="numpad__row">
+                <div class="numpad__row_btn numpad__row_btn-num">1</div>
+                <div class="numpad__row_btn numpad__row_btn-num">2</div>
+                <div class="numpad__row_btn numpad__row_btn-num">3</div>
+            </div>
+            <div class="numpad__row">
+                <div class="numpad__row_btn numpad__row_btn-num">4</div>
+                <div class="numpad__row_btn numpad__row_btn-num">5</div>
+                <div class="numpad__row_btn numpad__row_btn-num">6</div>
+            </div>
+            <div class="numpad__row">
+                <div class="numpad__row_btn numpad__row_btn-num">7</div>
+                <div class="numpad__row_btn numpad__row_btn-num">8</div>
+                <div class="numpad__row_btn numpad__row_btn-num">9</div>
+            </div>
+            <div class="numpad__row">
+                <div class="numpad__row_btn">C</div>
+                <div class="numpad__row_btn numpad__row_btn-num">0</div>
+                <div class="numpad__row_btn"><</div>
+            </div>
+            <div class="numpad__row_btn-take">TAKE</div>
+        </div>
+    </div>
+</body>
+</html>
