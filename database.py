@@ -3,11 +3,18 @@ import sqlite3
 
 
 class Database:
+    __instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = super().__new__(cls)
+        return cls.__instance
+
     def __init__(self, name: str):
         self.name = name
 
     def get_connection(self):
-        return sqlite3.connect(self.name)
+        return sqlite3.connect(self.name, check_same_thread=False)
 
     def get_cursor(self, connection):
         cursor = connection.cursor()
