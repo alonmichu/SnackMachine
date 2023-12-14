@@ -2,14 +2,17 @@ from __future__ import annotations
 import sqlite3
 
 
-class Database:
-    __instance = None
+class SingletonMetaclass(type):
+    _instances = {}
 
-    def __new__(cls, *args, **kwargs):
-        if cls.__instance is None:
-            cls.__instance = super().__new__(cls)
-        return cls.__instance
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
 
+
+class Database(metaclass=SingletonMetaclass):
     def __init__(self, name: str):
         self.name = name
 
