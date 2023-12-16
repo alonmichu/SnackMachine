@@ -9,23 +9,29 @@ api = Api()
 class Main(Resource):
     # обработка запроса на наличие снека
     def get(self, snack_id):
-        inspector = set_db.snack_db.is_available(set_db.connection, snack_id)
-        return inspector
+        strategy = set_db.context.get_strategy(-1)
+        return strategy.send_query(idx=snack_id, snack_db=set_db.snack_db,
+                                   connection=set_db.connection, dif=0)
+        # inspector = set_db.snack_db.is_available(set_db.connection, snack_id)
+        # return inspector
 
     # обработка запросов на пополнение и покупку снеков
     def put(self, snack_id):
         parser = reqparse.RequestParser()
         parser.add_argument("change", type=int)
         changer = parser.parse_args()
-        if changer.change > 0:
-            set_db.snack_db.add_snack(set_db.connection, snack_id, changer.change)
-        elif changer.change == 0:
-            free_space = set_db.snack_db.get_max_stock(set_db.connection)
-            free_space -= set_db.snack_db.get_snack_amount(set_db.connection, snack_id)
-            return free_space
-        else:
-            set_db.snack_db.buy_snack(set_db.connection, snack_id)
-        return changer
+        strategy = set_db.context.get_strategy(changer.change)
+        return strategy.send_query(idx=snack_id, snack_db=set_db.snack_db,
+                                   connection=set_db.connection, dif=changer.change)
+        # if changer.change > 0:
+        #     set_db.snack_db.add_snack(set_db.connection, snack_id, changer.change)
+        # elif changer.change == 0:
+        #     free_space = set_db.snack_db.get_max_stock(set_db.connection)
+        #     free_space -= set_db.snack_db.get_snack_amount(set_db.connection, snack_id)
+        #     return free_space
+        # else:
+        #     set_db.snack_db.buy_snack(set_db.connection, snack_id)
+        # return changer
 
 
 api.add_resource(Main, "/api/snacks/<int:snack_id>")
